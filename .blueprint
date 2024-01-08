@@ -1,0 +1,6 @@
+created:
+    - database/factories/AssignmentFactory.php
+    - database/migrations/2024_01_08_014514_create_assignments_table.php
+    - app/Models/Assignment.php
+models:
+    Assignment: { title: 'string:400', description: text, deadline: datetime, file_path: 'string:2048 nullable', relationship: 'BelongsTo User', softdeletes: softDeletes, timestamps: timestamps }
