@@ -19,9 +19,8 @@ class Assignment extends Model
         'title',
         'description',
         'deadline',
-        'file_path',
-        // 'relationship',
-        // 'subject',
+        'file_paths' => 'array',       
+         'subject',
     ];
 
     /**

@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('title', 400);
             $table->text('description');
             $table->dateTime('deadline');
-            $table->string('file_path', 2048)->nullable();
+            $table->string('file_path', 10000)->nullable();
             $table->string('relationship');
             $table->timestamps();
             $table->softDeletes();
