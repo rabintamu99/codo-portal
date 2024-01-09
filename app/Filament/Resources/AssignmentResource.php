@@ -45,7 +45,9 @@ class AssignmentResource extends Resource
             ->columnSpan([
                 'sm' => 12, 
             ]),
-        Forms\Components\RichEditor::make('description')
+        Forms\Components\MarkdownEditor::make('description')
+        ->fileAttachmentsDisk('public')
+        ->fileAttachmentsDirectory('description_images') 
             ->columnSpan([
                 'sm' => 12, 
             ]),
@@ -101,26 +103,26 @@ class AssignmentResource extends Resource
         return $infolist
             ->schema([
                 Section::make('かだい ないよう')
-                    ->description('Details about the assignment')
+                    ->description('')
                     ->schema([
                         TextEntry::make('title')
                             ->label('Title'),
                         TextEntry::make('description')
-                            ->markdown(),
+                        ->markdown(),
                         TextEntry::make('deadline')
                             ->label('Deadline'),
                     ])
                     ->collapsed(false), // Set to true to initially collapse the section
     
                 Section::make('かだい フアイル')
-                    ->description('Files related to the assignment')
+                    ->description('')
                     ->schema([
                         ImageEntry::make('file_path')
-    ->disk('public')
-    ->label('File')
-    ->url(fn ($record) => asset('storage/' . $record->file_path)), // Construct the URL
-                    ])
-                    ->collapsed(false),
+                          ->disk('public')
+                          ->label('File')
+                          ->url(fn ($record) => asset('storage/' . $record->file_path)),
+                            ])
+                 ->collapsed(false),
             ]);
     }
 

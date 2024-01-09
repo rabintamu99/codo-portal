@@ -18,6 +18,7 @@ use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
+use Saade\FilamentFullCalendar\FilamentFullCalendarPlugin; 
 
 class AppPanelProvider extends PanelProvider
 {
@@ -30,6 +31,7 @@ class AppPanelProvider extends PanelProvider
             ->login()
             ->breadcrumbs(false)
             ->brandName('CODO ポータル')
+            ->plugins([FilamentFullCalendarPlugin::make()])
             ->colors([
                 'primary' => Color::Amber,
             ])
