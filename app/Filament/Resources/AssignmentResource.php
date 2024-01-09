@@ -27,9 +27,9 @@ class AssignmentResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
-    protected static ?string $navigationLabel = 'Cプログラミング';
+    protected static ?string $navigationLabel = '課題';
 
-    protected static ?string $navigationGroup = 'Classes';
+    protected static ?string $navigationGroup = 'Cプログラミング';
 
     protected static ?string $activeNavigationIcon = 'heroicon-o-document-text';
 

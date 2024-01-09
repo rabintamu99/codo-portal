@@ -29,7 +29,7 @@ class AppPanelProvider extends PanelProvider
             ->path('/')
             ->login()
             ->breadcrumbs(false)
-            ->brandName('CODO Portal')
+            ->brandName('CODO ポータル')
             ->colors([
                 'primary' => Color::Amber,
             ])
