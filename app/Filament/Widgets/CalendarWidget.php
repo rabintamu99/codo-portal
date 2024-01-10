@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Filament\Widgets;
- 
+use Filament\Forms;
 use App\Models\Event;
 use Illuminate\Database\Eloquent\Model;
 use Saade\FilamentFullCalendar\Widgets\FullCalendarWidget;
@@ -26,6 +26,20 @@ class CalendarWidget extends FullCalendarWidget
             ->toArray();
     }
     
+
+    public function getFormSchema(): array
+    {
+        return [
+           
+
+            Forms\Components\Grid::make()
+                ->schema([
+                    Forms\Components\TextInput::make('name')->required(),
+                    Forms\Components\DateTimePicker::make('start'),
+                    Forms\Components\DateTimePicker::make('end'),
+                ]),
+        ];
+    }
  
     public static function canView(): bool
     {

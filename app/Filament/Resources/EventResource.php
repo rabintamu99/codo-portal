@@ -16,14 +16,16 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 class EventResource extends Resource
 {
     protected static ?string $model = Event::class;
-
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationGroup = 'setting';
+    protected static ?string $navigationIcon = 'heroicon-o-calendar-days';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                //
+                Forms\Components\TextInput::make('name')->required(),
+                Forms\Components\DatePicker::make('start'),
+                Forms\Components\DatePicker::make('end'),
             ]);
     }
 
@@ -31,7 +33,10 @@ class EventResource extends Resource
     {
         return $table
             ->columns([
-                //
+                Tables\Columns\TextColumn::make('name')
+                ->searchable(),
+                Tables\Columns\TextColumn::make('start'),
+                Tables\Columns\TextColumn::make('end'),
             ])
             ->filters([
                 //

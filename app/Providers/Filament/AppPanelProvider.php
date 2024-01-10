@@ -31,6 +31,7 @@ class AppPanelProvider extends PanelProvider
             ->login()
             ->breadcrumbs(false)
             ->brandName('CODO ポータル')
+            ->sidebarCollapsibleOnDesktop()
             ->plugins([FilamentFullCalendarPlugin::make()])
             ->colors([
                 'primary' => Color::Amber,
@@ -55,7 +56,7 @@ class AppPanelProvider extends PanelProvider
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             ->widgets([
                 Widgets\AccountWidget::class,
-                Widgets\FilamentInfoWidget::class,
+              //Widgets\FilamentInfoWidget::class,
             ])
             ->middleware([
                 EncryptCookies::class,

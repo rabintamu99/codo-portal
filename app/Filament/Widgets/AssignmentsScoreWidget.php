@@ -10,18 +10,15 @@ class StatsOverview extends BaseWidget
     protected function getStats(): array
     {
         return [
-            Stat::make('Cプログラミング(提出数)', '9')
-            ->description('32k increase')
+            Stat::make('Cプログラミング 提出%', '90%')
+            ->description('8% increase')
             ->descriptionIcon('heroicon-m-arrow-trending-up')
             ->color('success'),
-        Stat::make('提出%', '21%')
+        Stat::make('VBA 提出%', '81%')
             ->description('7% increase')
             ->descriptionIcon('heroicon-m-arrow-trending-down')
             ->color('danger'),
-        Stat::make('Average time on page', '3:12')
-            ->description('3% increase')
-            ->descriptionIcon('heroicon-m-arrow-trending-up')
-            ->color('success'),
+       
         ];
     }
 }

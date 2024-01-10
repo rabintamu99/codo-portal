@@ -2,9 +2,9 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\SubjectResource\Pages;
-use App\Filament\Resources\SubjectResource\RelationManagers;
-use App\Models\Subject;
+use App\Filament\Resources\UserResource\Pages;
+use App\Filament\Resources\UserResource\RelationManagers;
+use App\Models\User;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -13,36 +13,13 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class SubjectResource extends Resource
+class UserResource extends Resource
 {
-    public static function registerNavigation(): array
-    {
-        $subjects = Subject::all();
-        $navigationItems = [];
+    protected static ?string $model = User::class;
 
-        foreach ($subjects as $subject) {
-            $navigationItems[] = [
-                'label' => $subject->name,
-                'url' => route('filament.resources.subjects.assignments', ['subject' => $subject->id]),
-                'icon' => 'heroicon-o-academic-cap',
-            ];
-        }
-
-        return $navigationItems;
-    }
-    public static function getLabel(): string
-    {
-        return 'Subject';
-    }
-
-    public static function getNavigationIcon(): string
-    {
-        return 'heroicon-o-academic-cap'; // choose an appropriate icon
-    }
-
-    protected static ?string $model = Subject::class;
     protected static ?string $navigationGroup = 'setting';
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+
+    protected static ?string $navigationIcon = 'heroicon-o-users';
 
     public static function form(Form $form): Form
     {
@@ -50,7 +27,6 @@ class SubjectResource extends Resource
             ->schema([
                 Forms\Components\TextInput::make('id')->required(),
                 Forms\Components\TextInput::make('name'),
-               
             ]);
     }
 
@@ -84,9 +60,9 @@ class SubjectResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListSubjects::route('/'),
-            'create' => Pages\CreateSubject::route('/create'),
-            'edit' => Pages\EditSubject::route('/{record}/edit'),
+            'index' => Pages\ListUsers::route('/'),
+            'create' => Pages\CreateUser::route('/create'),
+            'edit' => Pages\EditUser::route('/{record}/edit'),
         ];
     }
 }

@@ -21,6 +21,8 @@ use Filament\Infolists\Components\Htmlable;
 use Filament\Infolists\Components\TextEntry;
 use Illuminate\Support\HtmlString;
 
+
+
 class AssignmentResource extends Resource
 {
     protected static ?string $model = Assignment::class;
@@ -32,6 +34,8 @@ class AssignmentResource extends Resource
     protected static ?string $navigationGroup = 'Cプログラミング';
 
     protected static ?string $activeNavigationIcon = 'heroicon-o-document-text';
+
+    
 
     public static function form(Form $form): Form
     {
@@ -134,6 +138,7 @@ class AssignmentResource extends Resource
             //
         ];
     }
+
 
     public static function getPages(): array
     {
