@@ -19,7 +19,11 @@ class UserResource extends Resource
 
     protected static ?string $navigationGroup = 'setting';
 
+    protected static ?string $navigationLabel = 'ユーザ';
+
     protected static ?string $navigationIcon = 'heroicon-o-users';
+
+    protected static ?string $modelLabel = 'ユーザ';
 
     public static function form(Form $form): Form
     {
@@ -27,6 +31,7 @@ class UserResource extends Resource
             ->schema([
                 Forms\Components\TextInput::make('id')->required(),
                 Forms\Components\TextInput::make('name'),
+               
             ]);
     }
 
@@ -35,6 +40,13 @@ class UserResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('name')
+                ->label('名前')
+                ->searchable(),
+                Tables\Columns\TextColumn::make('student_id')
+                ->label('学籍番号')
+                ->searchable(),
+                Tables\Columns\TextColumn::make('')
+                ->label('ロール')
                 ->searchable(),
             ])
             ->filters([

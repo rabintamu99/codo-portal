@@ -20,7 +20,8 @@ use Filament\Infolists\Components\Section;
 use Filament\Infolists\Components\Htmlable;
 use Filament\Infolists\Components\TextEntry;
 use Illuminate\Support\HtmlString;
-
+use App\Filament\Widgets\AssignmentsScoreWidget;
+use Filament\Tables\Enums\FiltersLayout;
 
 
 class AssignmentResource extends Resource
@@ -29,13 +30,13 @@ class AssignmentResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
-    protected static ?string $navigationLabel = '課題';
+    protected static ?string $navigationLabel = 'タスク';
 
     protected static ?string $navigationGroup = 'Cプログラミング';
 
     protected static ?string $activeNavigationIcon = 'heroicon-o-document-text';
 
-    
+    protected static ?string $modelLabel = 'タスク';
 
     public static function form(Form $form): Form
     {
@@ -82,13 +83,26 @@ class AssignmentResource extends Resource
                 // ->searchable(),
                 Tables\Columns\TextColumn::make('deadline')
                 ->searchable(),
+                // Tables\Columns\TextColumn::make('subject')
+                // ->label('授業')
+                // ->searchable(),
+                 
+                Tables\Columns\TextColumn::make('status')
+                ->badge()
+                ->color(fn (string $state): string => match ($state) {
+               'not' => 'warning',
+               'submitted' => 'success',
+              
+               })
             ])
             ->filters([
-                Tables\Filters\SelectFilter::make('subject.name')->options([
-                    'Cプログラミング' => 'Cプログラミング',
-                    'VBA' => 'VBA',
-                ]),
-            ])
+                Tables\Filters\SelectFilter::make('subject')->label('授業選択')->options([
+                    '1' => 'Cプログラミング',
+                    '2' => 'VBA',
+                ])
+                ],layout: FiltersLayout::AboveContent)
+           
+
             ->actions([
                 Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
@@ -106,19 +120,19 @@ class AssignmentResource extends Resource
     {
         return $infolist
             ->schema([
-                Section::make('かだい ないよう')
+                Section::make('ないよう')
                     ->description('')
                     ->schema([
-                        TextEntry::make('title')
-                            ->label('Title'),
+                        TextEntry::make('title'),
+                            // ->label('Title'),
                         TextEntry::make('description')
                         ->markdown(),
-                        TextEntry::make('deadline')
-                            ->label('Deadline'),
+                        TextEntry::make('deadline'),
+                            // ->label('Deadline'),
                     ])
                     ->collapsed(false), // Set to true to initially collapse the section
     
-                Section::make('かだい フアイル')
+                Section::make('フアイル')
                     ->description('')
                     ->schema([
                         ImageEntry::make('file_path')
@@ -127,6 +141,12 @@ class AssignmentResource extends Resource
                           ->url(fn ($record) => asset('storage/' . $record->file_path)),
                             ])
                  ->collapsed(false),
+                 Section::make('コメント')
+                 ->description('')
+                 ->schema([
+                    TextEntry::make('title')->label(''),
+                         ])
+              ->collapsed(false),
             ]);
     }
 
