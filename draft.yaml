@@ -1,0 +1,9 @@
+models:
+  Assignment:
+    title: string:400
+    description: text
+    deadline: datetime
+    file_path: string:2048 nullable
+    relationship: BelongsTo User
+    softDeletes: true
+    timestamps: true

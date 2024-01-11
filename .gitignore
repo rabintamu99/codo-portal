@@ -17,3 +17,5 @@ yarn-error.log
 /.fleet
 /.idea
 /.vscode
+echo '/draft.yaml' >> .gitignore
+echo '/.blueprint' >> .gitignore
