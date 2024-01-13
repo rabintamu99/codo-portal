@@ -22,6 +22,8 @@ use Filament\Infolists\Components\TextEntry;
 use Illuminate\Support\HtmlString;
 use App\Filament\Widgets\AssignmentsScoreWidget;
 use Filament\Tables\Enums\FiltersLayout;
+use Filament\Resources\Components\Tab;
+
 
 
 class AssignmentResource extends Resource
@@ -31,8 +33,6 @@ class AssignmentResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
     protected static ?string $navigationLabel = 'タスク';
-
-    protected static ?string $navigationGroup = 'Cプログラミング';
 
     protected static ?string $activeNavigationIcon = 'heroicon-o-document-text';
 
@@ -78,16 +78,19 @@ class AssignmentResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('title')
+                ->label('課題名')
                 ->searchable(),
                 // Tables\Columns\TextColumn::make('description')
                 // ->searchable(),
                 Tables\Columns\TextColumn::make('deadline')
+                ->label('締切')
                 ->searchable(),
                 // Tables\Columns\TextColumn::make('subject')
                 // ->label('授業')
                 // ->searchable(),
                  
                 Tables\Columns\TextColumn::make('status')
+                ->label('提出状態')
                 ->badge()
                 ->color(fn (string $state): string => match ($state) {
                'not' => 'warning',
@@ -95,12 +98,12 @@ class AssignmentResource extends Resource
               
                })
             ])
-            ->filters([
-                Tables\Filters\SelectFilter::make('subject')->label('授業選択')->options([
-                    '1' => 'Cプログラミング',
-                    '2' => 'VBA',
-                ])
-                ],layout: FiltersLayout::AboveContent)
+            // ->filters([
+            //     Tables\Filters\SelectFilter::make('subject')->label('授業選択')->options([
+            //         '1' => 'Cプログラミング',
+            //         '2' => 'VBA',
+            //     ])
+            //     ],layout: FiltersLayout::AboveContent)
            
 
             ->actions([
@@ -115,7 +118,7 @@ class AssignmentResource extends Resource
             ]);
     }
 
- 
+    
     public static function infolist(InfoList $infolist): InfoList
     {
         return $infolist
