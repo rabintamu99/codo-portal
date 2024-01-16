@@ -19,6 +19,7 @@ use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use Saade\FilamentFullCalendar\FilamentFullCalendarPlugin; 
+use Filament\Notifications\Livewire\DatabaseNotifications;
 
 class AppPanelProvider extends PanelProvider
 {
@@ -36,6 +37,7 @@ class AppPanelProvider extends PanelProvider
             ->colors([
                 'primary' => Color::Amber,
             ])
+            ->databaseNotifications()
             ->navigationGroups([
                 NavigationGroup::make()
                      ->label('Shop')

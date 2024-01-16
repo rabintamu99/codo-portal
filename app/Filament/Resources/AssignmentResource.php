@@ -45,6 +45,7 @@ class AssignmentResource extends Resource
             Forms\Components\Select::make('subject')
             ->label('subject')
             ->options(Subject::all()->pluck('name', 'id')),
+            Forms\Components\DateTimePicker::make('deadline'),
             Forms\Components\TextInput::make('title')
             ->required()
             ->columnSpan([
@@ -56,16 +57,10 @@ class AssignmentResource extends Resource
             ->columnSpan([
                 'sm' => 12, 
             ]),
-            Forms\Components\DateTimePicker::make('deadline'),
             Forms\Components\FileUpload::make('file_path')
-           // ->imagePreviewHeight('250')
-            ->loadingIndicatorPosition('left')
-            ->panelAspectRatio('2:1')
-            ->panelLayout('integrated')
-            ->removeUploadedFileButtonPosition('right')
-            ->uploadButtonPosition('left')
-            ->uploadProgressIndicatorPosition('left')
-            ->multiple() 
+            ->label('')
+            ->disk('public')
+            ->directory('task_files')
             ->columnSpan([
                 'sm' => 12, 
             ]),
@@ -79,37 +74,52 @@ class AssignmentResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('title')
                 ->label('課題名')
-                ->searchable(),
-                // Tables\Columns\TextColumn::make('description')
-                // ->searchable(),
+                ->searchable()
+                ->sortable(),
                 Tables\Columns\TextColumn::make('deadline')
                 ->label('締切')
                 ->searchable(),
-                // Tables\Columns\TextColumn::make('subject')
-                // ->label('授業')
-                // ->searchable(),
-                 
-                Tables\Columns\TextColumn::make('status')
-                ->label('提出状態')
-                ->badge()
-                ->color(fn (string $state): string => match ($state) {
-               'not' => 'warning',
-               'submitted' => 'success',
-              
-               })
+            //   Tables\Columns\IconColumn::make('is_featured')
+            //     ->label('提出状況')
+            //     ->boolean(),
+                Tables\Columns\IconColumn::make('submitted')
+    ->label('提出状況')
+    ->getStateUsing(function ($record) {
+        $studentId = auth()->user()->id; // or get the student ID dynamically
+        $student = $record->students()->where('student_id', $studentId)->first();
+        return $student ? $student->pivot->submitted : false;
+    })
+    ->trueIcon('heroicon-s-check-circle')
+    ->falseIcon('heroicon-s-x-circle'),
+
             ])
-            // ->filters([
-            //     Tables\Filters\SelectFilter::make('subject')->label('授業選択')->options([
-            //         '1' => 'Cプログラミング',
-            //         '2' => 'VBA',
-            //     ])
-            //     ],layout: FiltersLayout::AboveContent)
-           
 
             ->actions([
+
+                
+                Tables\Actions\Action::make('upload')
+                    ->label('提出')
+                    ->icon('heroicon-o-arrow-up-tray')
+                    ->form([
+                        Forms\Components\FileUpload::make('assignment_file')
+                            ->label('ファイルを下で選択するか、ここにドロップしてください')
+                            ->disk('public')
+                            ->directory('assignment_submissions')
+                            ->required(),
+                    ])
+                    ->action(function ($record, $data) {
+                        // Handle file upload and update pivot table
+                        $studentId = auth()->user()->id; // or get the student ID dynamically
+                        $record->students()->updateExistingPivot($studentId, [
+                            'file_path' => $data['assignment_file'],
+                            'submitted' => true,
+                        ]);
+                    }),
+
+
                 Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
-               
+                
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -117,43 +127,6 @@ class AssignmentResource extends Resource
                 ]),
             ]);
     }
-
-    
-    public static function infolist(InfoList $infolist): InfoList
-    {
-        return $infolist
-            ->schema([
-                Section::make('ないよう')
-                    ->description('')
-                    ->schema([
-                        TextEntry::make('title'),
-                            // ->label('Title'),
-                        TextEntry::make('description')
-                        ->markdown(),
-                        TextEntry::make('deadline'),
-                            // ->label('Deadline'),
-                    ])
-                    ->collapsed(false), // Set to true to initially collapse the section
-    
-                Section::make('フアイル')
-                    ->description('')
-                    ->schema([
-                        ImageEntry::make('file_path')
-                          ->disk('public')
-                          ->label('File')
-                          ->url(fn ($record) => asset('storage/' . $record->file_path)),
-                            ])
-                 ->collapsed(false),
-                 Section::make('コメント')
-                 ->description('')
-                 ->schema([
-                    TextEntry::make('title')->label(''),
-                         ])
-              ->collapsed(false),
-            ]);
-    }
-
-   
 
     public static function getRelations(): array
     {
@@ -168,6 +141,8 @@ class AssignmentResource extends Resource
         return [
             'index' => Pages\ListAssignments::route('/'),
             'create' => Pages\CreateAssignment::route('/create'),
+            'action' => Pages\CreateAssignment::route('/{record}/create'),
+            'view' => Pages\ViewAssignment::route('/{record}'),
             'edit' => Pages\EditAssignment::route('/{record}/edit'),
         ];
     }

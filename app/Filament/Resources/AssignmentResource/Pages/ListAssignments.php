@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\AssignmentResource\Pages;
 
 use App\Filament\Resources\AssignmentResource;
+use App\Models\Assignment;
 use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
 use Filament\Resources\Components\Tab;
@@ -25,9 +26,12 @@ class ListAssignments extends ListRecords
         return [
             'all' => Tab::make(),
             'Cプログラミング' => Tab::make()
+                ->badge(Assignment::query()->where('subject', 1)->count())
                 ->modifyQueryUsing(fn (Builder $query) => $query->where('subject', 1)),
             'VBA' => Tab::make()
+            ->badge(Assignment::query()->where('subject', 2)->count())
                 ->modifyQueryUsing(fn (Builder $query) => $query->where('subject', 2)),
+                
         ];
     }
     

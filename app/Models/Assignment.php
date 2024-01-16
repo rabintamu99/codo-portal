@@ -37,4 +37,11 @@ class Assignment extends Model
 {
     return $this->belongsTo(Subject::class);
 }
+
+public function students()
+{
+    return $this->belongsToMany(Student::class, 'assignment_student')
+                ->withPivot('submitted', 'file_path');
+}
+
 }

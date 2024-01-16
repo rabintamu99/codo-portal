@@ -34,6 +34,11 @@ class User extends Authenticatable
         'remember_token',
     ];
 
+    public function student()
+    {
+        return $this->hasOne(Student::class);
+    }
+
     /**
      * The attributes that should be cast.
      *
@@ -43,4 +48,11 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function assignments()
+{
+    return $this->belongsToMany(Assignment::class, 'assignment')
+                ->withPivot('is_submitted');
+}
+
 }
