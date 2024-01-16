@@ -31,6 +31,7 @@ class UserResource extends Resource
             ->schema([
                 Forms\Components\TextInput::make('id')->required(),
                 Forms\Components\TextInput::make('name'),
+                Forms\Components\Select::make('roles')->multiple()->relationship('roles', 'name'),
                
             ]);
     }
@@ -48,6 +49,7 @@ class UserResource extends Resource
                 Tables\Columns\TextColumn::make('')
                 ->label('ロール')
                 ->searchable(),
+              
             ])
             ->filters([
                 //

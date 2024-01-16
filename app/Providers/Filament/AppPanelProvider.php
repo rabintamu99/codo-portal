@@ -20,7 +20,7 @@ use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use Saade\FilamentFullCalendar\FilamentFullCalendarPlugin; 
 use Filament\Notifications\Livewire\DatabaseNotifications;
-
+use Althinect\FilamentSpatieRolesPermissions\FilamentSpatieRolesPermissionsPlugin;
 class AppPanelProvider extends PanelProvider
 {
     public function panel(Panel $panel): Panel
@@ -38,6 +38,7 @@ class AppPanelProvider extends PanelProvider
                 'primary' => Color::Amber,
             ])
             ->databaseNotifications()
+            ->plugin(FilamentSpatieRolesPermissionsPlugin::make())
             ->navigationGroups([
                 NavigationGroup::make()
                      ->label('Shop')
