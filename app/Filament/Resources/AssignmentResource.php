@@ -24,6 +24,7 @@ use App\Filament\Widgets\AssignmentsScoreWidget;
 use Filament\Tables\Enums\FiltersLayout;
 use Filament\Resources\Components\Tab;
 use Filament\Forms\Components\Actions\Action;
+use Filament\Notifications\Notification;
 
 
 
@@ -44,15 +45,18 @@ class AssignmentResource extends Resource
         return $form
         ->schema([
             Forms\Components\Select::make('subject')
-            ->label('subject')
+            ->label('授業選択')
             ->options(Subject::all()->pluck('name', 'id')),
-            Forms\Components\DateTimePicker::make('deadline'),
+            Forms\Components\DateTimePicker::make('deadline')
+            ->label('期限日'),
             Forms\Components\TextInput::make('title')
+            ->label('件名')
             ->required()
             ->columnSpan([
                 'sm' => 12, 
             ]),
         Forms\Components\MarkdownEditor::make('description')
+        ->label('タスクの詳細')
         ->fileAttachmentsDisk('public')
         ->fileAttachmentsDirectory('description_images') 
             ->columnSpan([
@@ -74,11 +78,11 @@ class AssignmentResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('title')
-                ->label('課題名')
-                ->searchable()
-                ->sortable(),
+                ->label('タスク名')
+                ->searchable(),
+               // ->sortable(),
                 Tables\Columns\TextColumn::make('deadline')
-                ->label('締切')
+                ->label('期限日')
                 ->searchable(),
             //   Tables\Columns\IconColumn::make('is_featured')
             //     ->label('提出状況')
@@ -94,6 +98,7 @@ class AssignmentResource extends Resource
             ->falseIcon('heroicon-s-x-circle'),
 
             ])
+            ->defaultSort('title', 'desc')
 
             ->actions([
                     Tables\Actions\Action::make('upload')
@@ -107,23 +112,36 @@ class AssignmentResource extends Resource
                             ->required(),
                     ])
                     ->action(function ($record, $data) {
+                           // Check if the current time is past the assignment deadline
+                        if (now()->greaterThan($record->deadline)) {
+                            Notification::make()
+                            ->title('締切日を過ぎています。提出できません。')
+                            ->warning()
+                            ->send();
+                        return;
+                        }
+
                         $studentId = auth()->user()->student->id; // Assuming the logged-in user is a student
                         $filePath = $data['task_file']; // Get uploaded file path
                 
                         $record->students()->syncWithoutDetaching([
                             $studentId => ['file_path' => $filePath, 'submitted' => true]
                         ]);
+                        Notification::make()
+                        ->title('提出しました')
+                        ->success()
+                        ->send();
                     }),
-                
+                 
 
                 Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
                 
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
+                // Tables\Actions\BulkActionGroup::make([
+                //     Tables\Actions\DeleteBulkAction::make(),
+                // ]),
             ]);
     }
 
@@ -140,7 +158,7 @@ class AssignmentResource extends Resource
         return [
             'index' => Pages\ListAssignments::route('/'),
             'create' => Pages\CreateAssignment::route('/create'),
-            'upload' => Pages\CreateAssignment::route('/{record}/upload'),
+           // 'upload' => Pages\CreateAssignment::route('/{record}/upload'),
             'view' => Pages\ViewAssignment::route('/{record}'),
             'edit' => Pages\EditAssignment::route('/{record}/edit'),
         ];

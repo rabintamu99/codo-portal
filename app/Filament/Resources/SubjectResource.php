@@ -15,6 +15,8 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class SubjectResource extends Resource
 {
+    protected static ?string $navigationLabel = '授業';
+    protected static ?string $modelLabel = '授業';
     public static function registerNavigation(): array
     {
         $subjects = Subject::all();
