@@ -30,7 +30,7 @@ class AppPanelProvider extends PanelProvider
             ->id('app')
             ->path('/')
             ->login()
-            ->breadcrumbs(false)
+            ->breadcrumbs(true)
             ->brandName('CODO ポータル')
             ->sidebarCollapsibleOnDesktop()
             ->plugins([FilamentFullCalendarPlugin::make()])

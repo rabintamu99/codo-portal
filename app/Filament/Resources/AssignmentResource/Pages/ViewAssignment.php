@@ -4,6 +4,7 @@ namespace App\Filament\Resources\AssignmentResource\Pages;
 
 use App\Filament\Resources\AssignmentResource;
 use Filament\Actions;
+use Filament\Forms\Components\RichEditor;
 use Filament\Resources\Pages\ViewRecord;
 use Filament\Infolists\Infolist;
 use Filament\Infolists\Components\Section;
@@ -23,10 +24,15 @@ class ViewAssignment extends ViewRecord
                 Section::make('ないよう')
                     ->description('')
                     ->schema([
-                        TextEntry::make('title'),
-                        ImageEntry::make('description'),
-                        //->html(),
-                        TextEntry::make('deadline'),
+                        TextEntry::make('title')
+                        ->label(''),
+                        TextEntry::make('description')
+                        ->label('')
+                        ->markdown(),
+                        TextEntry::make('deadline')
+                        ->label('締切'),
+                        
+                       
                     ])
                     ->collapsed(false), // Set to true to initially collapse the section
 
@@ -35,12 +41,13 @@ class ViewAssignment extends ViewRecord
                     ->schema([
                         ImageEntry::make('file_path')
                           ->disk('public')
-                        //   ->label('File')
+                          ->label('ダウンロドする')
+                        
                           ->url(fn ($record) => asset('storage/' . $record->file_path)),
                             ])
                  ->collapsed(false),
                  Section::make('コメント')
-                 ->description('')
+                 ->description('コメントありません')
                  ->schema([
                
                          ])

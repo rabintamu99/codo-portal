@@ -23,6 +23,7 @@ use Illuminate\Support\HtmlString;
 use App\Filament\Widgets\AssignmentsScoreWidget;
 use Filament\Tables\Enums\FiltersLayout;
 use Filament\Resources\Components\Tab;
+use Filament\Forms\Components\Actions\Action;
 
 
 
@@ -83,39 +84,37 @@ class AssignmentResource extends Resource
             //     ->label('提出状況')
             //     ->boolean(),
                 Tables\Columns\IconColumn::make('submitted')
-    ->label('提出状況')
-    ->getStateUsing(function ($record) {
-        $studentId = auth()->user()->id; // or get the student ID dynamically
-        $student = $record->students()->where('student_id', $studentId)->first();
-        return $student ? $student->pivot->submitted : false;
-    })
-    ->trueIcon('heroicon-s-check-circle')
-    ->falseIcon('heroicon-s-x-circle'),
+            ->label('提出状況')
+            ->getStateUsing(function ($record) {
+               $studentId = auth()->user()->id; // or get the student ID dynamically
+               $student = $record->students()->where('student_id', $studentId)->first();
+             return $student ? $student->pivot->submitted : false;
+            })
+            ->trueIcon('heroicon-s-check-circle')
+            ->falseIcon('heroicon-s-x-circle'),
 
             ])
 
             ->actions([
-
-                
-                Tables\Actions\Action::make('upload')
+                    Tables\Actions\Action::make('upload')
                     ->label('提出')
                     ->icon('heroicon-o-arrow-up-tray')
                     ->form([
-                        Forms\Components\FileUpload::make('assignment_file')
+                        Forms\Components\FileUpload::make('task_file')
                             ->label('ファイルを下で選択するか、ここにドロップしてください')
                             ->disk('public')
-                            ->directory('assignment_submissions')
+                            ->directory('task_uploads')
                             ->required(),
                     ])
                     ->action(function ($record, $data) {
-                        // Handle file upload and update pivot table
-                        $studentId = auth()->user()->id; // or get the student ID dynamically
-                        $record->students()->updateExistingPivot($studentId, [
-                            'file_path' => $data['assignment_file'],
-                            'submitted' => true,
+                        $studentId = auth()->user()->student->id; // Assuming the logged-in user is a student
+                        $filePath = $data['task_file']; // Get uploaded file path
+                
+                        $record->students()->syncWithoutDetaching([
+                            $studentId => ['file_path' => $filePath, 'submitted' => true]
                         ]);
                     }),
-
+                
 
                 Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
@@ -141,7 +140,7 @@ class AssignmentResource extends Resource
         return [
             'index' => Pages\ListAssignments::route('/'),
             'create' => Pages\CreateAssignment::route('/create'),
-            'action' => Pages\CreateAssignment::route('/{record}/create'),
+            'upload' => Pages\CreateAssignment::route('/{record}/upload'),
             'view' => Pages\ViewAssignment::route('/{record}'),
             'edit' => Pages\EditAssignment::route('/{record}/edit'),
         ];
