@@ -21,13 +21,6 @@ use Illuminate\View\Middleware\ShareErrorsFromSession;
 use Saade\FilamentFullCalendar\FilamentFullCalendarPlugin; 
 use Filament\Notifications\Livewire\DatabaseNotifications;
 use Althinect\FilamentSpatieRolesPermissions\FilamentSpatieRolesPermissionsPlugin;
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-=======
-=======
->>>>>>> Stashed changes
-
->>>>>>> Stashed changes
 class AppPanelProvider extends PanelProvider
 {
     public function panel(Panel $panel): Panel
