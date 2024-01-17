@@ -6,9 +6,15 @@ return [
 
     'preload_permissions' => true,
 
+<<<<<<< Updated upstream
     'navigation_section_group' => 'setting', // Default uses language constant
 
    // 'team_model' => \App\Models\Team::class,
+=======
+    'navigation_section_group' => 'filament-spatie-roles-permissions::filament-spatie.section.roles_and_permissions', // Default uses language constant
+
+    'team_model' => \App\Models\Team::class,
+>>>>>>> Stashed changes
 
     /*
      * Set as false to remove from navigation.
@@ -59,7 +65,11 @@ return [
 
         'guard_names' => [
             'web',
+<<<<<<< Updated upstream
             'api',
+=======
+            //'api',
+>>>>>>> Stashed changes
         ],
 
         'permission_affixes' => [

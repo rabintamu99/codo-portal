@@ -21,6 +21,10 @@ use Illuminate\View\Middleware\ShareErrorsFromSession;
 use Saade\FilamentFullCalendar\FilamentFullCalendarPlugin; 
 use Filament\Notifications\Livewire\DatabaseNotifications;
 use Althinect\FilamentSpatieRolesPermissions\FilamentSpatieRolesPermissionsPlugin;
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
 class AppPanelProvider extends PanelProvider
 {
     public function panel(Panel $panel): Panel
@@ -37,6 +41,7 @@ class AppPanelProvider extends PanelProvider
             ->colors([
                 'primary' => Color::Amber,
             ])
+            ->plugin(FilamentSpatieRolesPermissionsPlugin::make())
             ->databaseNotifications()
             ->plugin(FilamentSpatieRolesPermissionsPlugin::make())
             ->navigationGroups([
