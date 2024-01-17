@@ -6,11 +6,9 @@ return [
 
     'preload_permissions' => true,
 
-    'navigation_section_group' => 'setting', // Default uses language constant
+    'navigation_section_group' => 'ユーザー管理', // Default uses language constant
 
-
-   // 'team_model' => \App\Models\Team::class,
-
+    'team_model' => \App\Models\Team::class,
 
     /*
      * Set as false to remove from navigation.
@@ -22,7 +20,7 @@ return [
 
     'guard_names' => [
         'web' => 'web',
-        'api' => 'api',
+       // 'api' => 'api',
     ],
 
     'toggleable_guard_names' => [
@@ -34,7 +32,7 @@ return [
         ],
     ],
 
-    'default_guard_name' => null,
+    'default_guard_name' => 'web',
 
     'model_filter_key' => 'return \'%\'.$key;', // Eg: 'return \'%\'.$key.'\%\';'
 
@@ -44,15 +42,14 @@ return [
      * Icons to use for navigation
      */
     'icons' => [
-        'role_navigation' => 'heroicon-o-user-plus',
+        'role_navigation' => 'heroicon-o-finger-print',
         'permission_navigation' => 'heroicon-o-lock-closed',
     ],
 
-    'label' => [
-        'role_label' => 'Custom Roles Label', // Change 'roles' to your desired menu label for roles
-        'permission_navigation' => 'Custom Permissions Label', // Change to your desired menu label for permissions
-     ],
-     
+    'labels' => [
+        'role_navigation' => 'roles',
+        'permission_navigation' => 'permissions',
+    ],
     /*
      *  Navigation items order - int value, false  restores the default position
      */
@@ -66,7 +63,7 @@ return [
 
         'guard_names' => [
             'web',
-            //'api',
+            'api',
         ],
 
         'permission_affixes' => [
@@ -100,7 +97,7 @@ return [
          *
          * Note: If you are changing the "permission_name" , It's recommended to run with --clean to avoid duplications
          */
-       'permission_name' => 'return $permissionAffix . \' \' . $modelName;',
+        'permission_name' => 'return $permissionAffix . \' \' . $modelName;',
 
         /*
          * Permissions will be generated for the models associated with the respective Filament Resources

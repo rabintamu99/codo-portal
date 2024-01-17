@@ -133,7 +133,6 @@ class AssignmentResource extends Resource
                         ->send();
                     }),
                  
-
                 Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
                 
