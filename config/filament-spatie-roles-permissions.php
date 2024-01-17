@@ -8,6 +8,7 @@ return [
 
     'navigation_section_group' => 'setting', // Default uses language constant
 
+
    // 'team_model' => \App\Models\Team::class,
 
 
@@ -43,10 +44,15 @@ return [
      * Icons to use for navigation
      */
     'icons' => [
-        'role_navigation' => 'heroicon-o-lock-closed',
+        'role_navigation' => 'heroicon-o-user-plus',
         'permission_navigation' => 'heroicon-o-lock-closed',
     ],
 
+    'label' => [
+        'role_label' => 'Custom Roles Label', // Change 'roles' to your desired menu label for roles
+        'permission_navigation' => 'Custom Permissions Label', // Change to your desired menu label for permissions
+     ],
+     
     /*
      *  Navigation items order - int value, false  restores the default position
      */
@@ -60,7 +66,7 @@ return [
 
         'guard_names' => [
             'web',
-            'api',
+            //'api',
         ],
 
         'permission_affixes' => [
@@ -94,7 +100,7 @@ return [
          *
          * Note: If you are changing the "permission_name" , It's recommended to run with --clean to avoid duplications
          */
-        'permission_name' => 'return $permissionAffix . \' \' . $modelName;',
+       'permission_name' => 'return $permissionAffix . \' \' . $modelName;',
 
         /*
          * Permissions will be generated for the models associated with the respective Filament Resources
