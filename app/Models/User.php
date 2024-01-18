@@ -50,10 +50,4 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-//     public function assignments()
-// {
-//     return $this->belongsToMany(Assignment::class, 'assignment')
-//                 ->withPivot('is_submitted');
-// }
-
 }
