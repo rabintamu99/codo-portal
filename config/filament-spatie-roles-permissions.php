@@ -8,14 +8,14 @@ return [
 
     'navigation_section_group' => 'ユーザー管理', // Default uses language constant
 
-    'team_model' => \App\Models\Team::class,
+    //'team_model' => \App\Models\Team::class,
 
     /*
      * Set as false to remove from navigation.
      */
     'should_register_on_navigation' => [
-        'permissions' => true,
-        'roles' => true,
+        'permissions' => false,
+        'roles' => false,
     ],
 
     'guard_names' => [
@@ -46,10 +46,6 @@ return [
         'permission_navigation' => 'heroicon-o-lock-closed',
     ],
 
-    'labels' => [
-        'role_navigation' => 'roles',
-        'permission_navigation' => 'permissions',
-    ],
     /*
      *  Navigation items order - int value, false  restores the default position
      */
@@ -83,8 +79,8 @@ return [
             /*
              * Additional Resource Permissions
              */
-            'replicate',
-            'reorder',
+           // 'replicate',
+            //'reorder',
         ],
 
         /*
