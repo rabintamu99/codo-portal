@@ -8,6 +8,8 @@ use App\Policies\RolePolicy;
 use App\Policies\PermissionPolicy;
 use App\Models\Role; 
 use App\Models\Permission;
+use App\Models\User;
+use Illuminate\Support\Facades\Gate;
 
 
 class AuthServiceProvider extends ServiceProvider
@@ -27,6 +29,8 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        Gate::before(function (User $user, string $ability) {
+            return $user->isSuperAdmin() ? true: null;
+        });
     }
 }
