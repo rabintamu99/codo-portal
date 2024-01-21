@@ -20,7 +20,8 @@ use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use Saade\FilamentFullCalendar\FilamentFullCalendarPlugin; 
 use Filament\Notifications\Livewire\DatabaseNotifications;
-
+use Althinect\FilamentSpatieRolesPermissions\FilamentSpatieRolesPermissionsPlugin;
+use Filament\Navigation\NavigationItem;
 class AppPanelProvider extends PanelProvider
 {
     public function panel(Panel $panel): Panel
@@ -37,10 +38,12 @@ class AppPanelProvider extends PanelProvider
             ->colors([
                 'primary' => Color::Amber,
             ])
+            ->plugin(FilamentSpatieRolesPermissionsPlugin::make())
             ->databaseNotifications()
+            ->plugin(FilamentSpatieRolesPermissionsPlugin::make())
             ->navigationGroups([
                 NavigationGroup::make()
-                     ->label('Shop')
+                     ->label('管理')
                      ->icon('heroicon-o-shopping-cart'),
                 NavigationGroup::make()
                     ->label('Blog')
@@ -49,7 +52,12 @@ class AppPanelProvider extends PanelProvider
                     ->label(fn (): string => __('navigation.settings'))
                     ->icon('heroicon-o-cog-6-tooth')
                     ->collapsed(),
+                NavigationGroup::make()
+                  //->visible(fn(): bool => auth()->user()->can('view-user Setting'))
+                  ->label('ユーザー管理')
+                  ->collapsed(),
             ])
+  
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
             ->pages([
