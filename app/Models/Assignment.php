@@ -38,11 +38,23 @@ class Assignment extends Model
     return $this->belongsTo(Subject::class);
 }
 
+// public function students()
+// {
+//     return $this->belongsToMany(Student::class, 'assignment_student')
+//                 ->withPivot('submitted', 'file_path','created_at');
+// }
+
 public function students()
 {
-    return $this->belongsToMany(Student::class, 'assignment_student')
-                ->withPivot('submitted', 'file_path','created_at');
+    return $this->belongsToMany(User::class, 'assignment_student', 'assignment_id', 'student_id')
+                ->withPivot('submitted', 'file_path');
 }
 
+public function getSubmittedUsersAttribute()
+{
+    return $this->students()
+                ->wherePivot('submitted', true)
+                ->get();
+}
 
 }
