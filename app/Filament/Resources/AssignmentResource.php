@@ -87,17 +87,30 @@ class AssignmentResource extends Resource
             //   Tables\Columns\IconColumn::make('is_featured')
             //     ->label('提出状況')
             //     ->boolean(),
-                Tables\Columns\IconColumn::make('submitted')
+            //     Tables\Columns\IconColumn::make('submitted')
+            // ->label('提出状況')
+            // ->getStateUsing(function ($record) {
+            //    $studentId = auth()->user()->id; // or get the student ID dynamically
+            //    $student = $record->students()->where('student_id', $studentId)->first();
+            //  return $student ? $student->pivot->submitted : false;
+            // })
+            // ->trueIcon('heroicon-s-check-circle')
+            // ->falseIcon('heroicon-s-x-circle'),
+            Tables\Columns\IconColumn::make('submitted')
             ->label('提出状況')
             ->getStateUsing(function ($record) {
-               $studentId = auth()->user()->id; // or get the student ID dynamically
-               $student = $record->students()->where('student_id', $studentId)->first();
-             return $student ? $student->pivot->submitted : false;
+                $userId = auth()->user()->id; // Get the logged-in user's ID
+                $assignment = $record->students()->where('users.id', $userId)->first(); // Adjust table and column names as necessary
+        
+                return $assignment ? $assignment->pivot->submitted : false;
             })
             ->trueIcon('heroicon-s-check-circle')
             ->falseIcon('heroicon-s-x-circle'),
+        
 
             ])
+
+    
             ->defaultSort('title', 'desc')
 
             ->actions([
