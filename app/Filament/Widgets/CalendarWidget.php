@@ -9,6 +9,7 @@ use Saade\FilamentFullCalendar\Widgets\FullCalendarWidget;
 class CalendarWidget extends FullCalendarWidget
 {
     public Model | string | null $model = Event::class;
+    
  
     public function fetchEvents(array $fetchInfo): array
     {

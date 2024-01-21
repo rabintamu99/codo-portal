@@ -7,11 +7,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Spatie\Permission\Traits\HasRoles;
+use Althinect\FilamentSpatieRolesPermissions\Concerns\HasSuperAdmin;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable;
-
+    use HasApiTokens, HasFactory, Notifiable, HasRoles, HasSuperAdmin;
+    
     /**
      * The attributes that are mass assignable.
      *
@@ -34,6 +36,11 @@ class User extends Authenticatable
         'remember_token',
     ];
 
+    public function student()
+    {
+        return $this->hasOne(Student::class);
+    }
+
     /**
      * The attributes that should be cast.
      *
@@ -43,4 +50,11 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function assignments()
+    {
+        return $this->belongsToMany(Assignment::class, 'assignment_student', 'student_id', 'assignment_id')
+                    ->withPivot('submitted', 'file_path');
+    }
+
 }

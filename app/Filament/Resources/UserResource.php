@@ -17,20 +17,23 @@ class UserResource extends Resource
 {
     protected static ?string $model = User::class;
 
-    protected static ?string $navigationGroup = 'setting';
+    protected static ?string $navigationGroup = 'ユーザー管理';
 
-    protected static ?string $navigationLabel = 'ユーザ';
+    protected static ?string $navigationLabel = 'ユーザー';
 
     protected static ?string $navigationIcon = 'heroicon-o-users';
 
-    protected static ?string $modelLabel = 'ユーザ';
+    protected static ?string $modelLabel = 'ユーザー';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('id')->required(),
-                Forms\Components\TextInput::make('name'),
+                //Forms\Components\TextInput::make('id')->required(),
+                Forms\Components\TextInput::make('name')->required(),
+                Forms\Components\TextInput::make('student_id')->required(),
+                Forms\Components\TextInput::make('password')->required(),
+                Forms\Components\Select::make('roles')->multiple()->relationship('roles', 'name'),
                
             ]);
     }
@@ -45,9 +48,10 @@ class UserResource extends Resource
                 Tables\Columns\TextColumn::make('student_id')
                 ->label('学籍番号')
                 ->searchable(),
-                Tables\Columns\TextColumn::make('')
+                Tables\Columns\TextColumn::make('roles.name')
                 ->label('ロール')
                 ->searchable(),
+              
             ])
             ->filters([
                 //
@@ -77,4 +81,5 @@ class UserResource extends Resource
             'edit' => Pages\EditUser::route('/{record}/edit'),
         ];
     }
+    
 }
