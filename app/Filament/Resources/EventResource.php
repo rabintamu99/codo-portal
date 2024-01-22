@@ -15,11 +15,13 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class EventResource extends Resource
 {
-    protected static ?string $navigationLabel = 'イベント';
+    protected static ?string $navigationLabel = 'スケジュール';
     protected static ?string $modelLabel = 'イベント';
     protected static ?string $model = Event::class;
    // protected static ?string $navigationGroup = 'setting';
     protected static ?string $navigationIcon = 'heroicon-o-calendar-days';
+
+    protected static ?int $navigationSort = 3;
 
     public static function form(Form $form): Form
     {
@@ -36,9 +38,16 @@ class EventResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('name')
+                ->label('イベント')
                 ->searchable(),
-                Tables\Columns\TextColumn::make('start'),
-                Tables\Columns\TextColumn::make('end'),
+                Tables\Columns\TextColumn::make('start')
+                ->label('開始日')
+                ->badge()
+                ->dateTime(),
+                Tables\Columns\TextColumn::make('end')
+                ->label('終了日')
+                ->badge()
+                ->dateTime(),
             ])
             ->filters([
                 //

@@ -39,6 +39,7 @@ class AssignmentResource extends Resource
     protected static ?string $activeNavigationIcon = 'heroicon-o-document-text';
 
     protected static ?string $modelLabel = 'タスク';
+    protected static ?int $navigationSort = 4;
 
     public static function form(Form $form): Form
     {
@@ -84,21 +85,9 @@ class AssignmentResource extends Resource
                 Tables\Columns\TextColumn::make('deadline')
                 ->label('期限日')
                 ->searchable(),
-            //   Tables\Columns\IconColumn::make('is_featured')
-            //     ->label('提出状況')
-            //     ->boolean(),
-            //     Tables\Columns\IconColumn::make('submitted')
-            // ->label('提出状況')
-            // ->getStateUsing(function ($record) {
-            //    $studentId = auth()->user()->id; // or get the student ID dynamically
-            //    $student = $record->students()->where('student_id', $studentId)->first();
-            //  return $student ? $student->pivot->submitted : false;
-            // })
-            // ->trueIcon('heroicon-s-check-circle')
-            // ->falseIcon('heroicon-s-x-circle'),
-            Tables\Columns\IconColumn::make('submitted')
-            ->label('提出状況')
-            ->getStateUsing(function ($record) {
+                Tables\Columns\IconColumn::make('submitted')
+                ->label('提出状況')
+                ->getStateUsing(function ($record) {
                 $userId = auth()->user()->id; // Get the logged-in user's ID
                 $assignment = $record->students()->where('users.id', $userId)->first(); // Adjust table and column names as necessary
         
@@ -106,8 +95,6 @@ class AssignmentResource extends Resource
             })
             ->trueIcon('heroicon-s-check-circle')
             ->falseIcon('heroicon-s-x-circle'),
-        
-
             ])
 
     
@@ -160,7 +147,7 @@ class AssignmentResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+        
         ];
     }
 
@@ -170,7 +157,6 @@ class AssignmentResource extends Resource
         return [
             'index' => Pages\ListAssignments::route('/'),
             'create' => Pages\CreateAssignment::route('/create'),
-           // 'upload' => Pages\CreateAssignment::route('/{record}/upload'),
             'view' => Pages\ViewAssignment::route('/{record}'),
             'edit' => Pages\EditAssignment::route('/{record}/edit'),
         ];
