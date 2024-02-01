@@ -46,10 +46,16 @@ class UserResource extends Resource
                 ->label('名前')
                 ->searchable(),
                 Tables\Columns\TextColumn::make('student_id')
-                ->label('学籍番号')
+                ->label('ログインID')
                 ->searchable(),
                 Tables\Columns\TextColumn::make('roles.name')
                 ->label('ロール')
+                ->badge()
+                ->color(fn (string $state): string => match ($state) {
+                    'Admin'=> 'success',
+                    '学生' => 'warning',
+                    '先生' => 'danger',
+                })
                 ->searchable(),
               
             ])

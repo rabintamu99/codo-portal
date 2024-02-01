@@ -11,7 +11,7 @@
     }
 
     .submission-table th {
-        background-color: #f4f4f4;
+        background-color: #f9f9f9;
     }
 
     .submission-table tr:nth-child(even) {

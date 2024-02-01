@@ -46,6 +46,8 @@ class SubjectResource extends Resource
     //protected static ?string $navigationGroup = 'setting';
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
+    protected static ?int $navigationSort = 5;
+
     public static function form(Form $form): Form
     {
         return $form
@@ -61,6 +63,7 @@ class SubjectResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('name')
+                ->label('授業名')
                 ->searchable(),
             ])
             ->filters([

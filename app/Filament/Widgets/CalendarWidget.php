@@ -5,6 +5,7 @@ use Filament\Forms;
 use App\Models\Event;
 use Illuminate\Database\Eloquent\Model;
 use Saade\FilamentFullCalendar\Widgets\FullCalendarWidget;
+use Saade\FilamentFullCalendar\Actions\CreateAction;
 
 class CalendarWidget extends FullCalendarWidget
 {
@@ -13,7 +14,10 @@ class CalendarWidget extends FullCalendarWidget
  
     public function fetchEvents(array $fetchInfo): array
     {
-        return Event::where('start', '>=', $fetchInfo['start'])
+        $userId = auth()->user()->id; 
+    
+        return Event::where('user_id', $userId) 
+            ->where('start', '>=', $fetchInfo['start'])
             ->where('end', '<=', $fetchInfo['end'])
             ->get()
             ->map(function (Event $event) {
@@ -26,6 +30,7 @@ class CalendarWidget extends FullCalendarWidget
             })
             ->toArray();
     }
+    
     
 
     public function getFormSchema(): array
@@ -41,6 +46,7 @@ class CalendarWidget extends FullCalendarWidget
                 ]),
         ];
     }
+
  
     public static function canView(): bool
     {

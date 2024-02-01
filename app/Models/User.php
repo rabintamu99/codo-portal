@@ -57,4 +57,9 @@ class User extends Authenticatable
                     ->withPivot('submitted', 'file_path');
     }
 
+    public function event()
+    {
+        return $this->hasMany(Event::class);
+    }
+
 }
