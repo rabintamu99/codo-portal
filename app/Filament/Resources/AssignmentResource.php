@@ -12,6 +12,7 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Filament\Resources\Pages\Page;
 use Filament\Infolists\Infolist;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -25,6 +26,8 @@ use Filament\Tables\Enums\FiltersLayout;
 use Filament\Resources\Components\Tab;
 use Filament\Forms\Components\Actions\Action;
 use Filament\Notifications\Notification;
+use Filament\Infolists\Components\Tabs;
+use Filament\Pages\SubNavigationPosition;
 
 
 
@@ -40,6 +43,7 @@ class AssignmentResource extends Resource
 
     protected static ?string $modelLabel = 'タスク';
     protected static ?int $navigationSort = 4;
+    protected static SubNavigationPosition $subNavigationPosition = SubNavigationPosition::Top;
 
     public static function form(Form $form): Form
     {
@@ -83,6 +87,7 @@ class AssignmentResource extends Resource
                 ->searchable(),
                // ->sortable(),
                 Tables\Columns\TextColumn::make('deadline')
+                ->date()
                 ->label('期限日')
                 ->searchable(),
                 Tables\Columns\IconColumn::make('submitted')
@@ -133,8 +138,8 @@ class AssignmentResource extends Resource
                         ->send();
                     }),
                  
-                Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
+                //Tables\Actions\ViewAction::make(),
+               // Tables\Actions\EditAction::make(),
                 
             ])
             ->bulkActions([
@@ -144,6 +149,14 @@ class AssignmentResource extends Resource
             ]);
     }
 
+    public static function getRecordSubNavigation(Page $page): array
+    {
+        return $page->generateNavigationItems([
+            Pages\ViewAssignment::class,
+            Pages\EditAssignment::class,
+            Pages\AssignSubmit::class,
+        ]);
+    }
     public static function getRelations(): array
     {
         return [
@@ -159,6 +172,7 @@ class AssignmentResource extends Resource
             'create' => Pages\CreateAssignment::route('/create'),
             'view' => Pages\ViewAssignment::route('/{record}'),
             'edit' => Pages\EditAssignment::route('/{record}/edit'),
+            'submit' => Pages\AssignSubmit::route('/{record}/submission'),
         ];
     }
 }

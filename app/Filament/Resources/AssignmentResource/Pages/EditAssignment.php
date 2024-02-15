@@ -10,6 +10,10 @@ class EditAssignment extends EditRecord
 {
     protected static string $resource = AssignmentResource::class;
 
+    public static function getNavigationLabel(): string
+    {
+        return 'タスク編集';
+    }
     protected function getHeaderActions(): array
     {
         return [

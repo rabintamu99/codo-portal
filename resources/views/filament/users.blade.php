@@ -5,12 +5,12 @@
     }
 
     .submission-table th, .submission-table td {
-        border: 1px solid #ddd;
+        border: 1px solid #f9f9f9;
         padding: 8px;
         text-align: left;
     }
 
-    .submission-table th {
+    .submission-table th, .submission-table thead  {
         background-color: #f9f9f9;
     }
 
@@ -39,12 +39,12 @@
 <div>
     @if($submittedUsers->isNotEmpty())
         <table class="submission-table">
-            <thead>
+            <tbody>
                 <tr>
-                    <th>名前</th>
-                    <th>学籍番号</th>
-                    <th>提出状況</th>
-                    <th>フアィル</th>
+                    <td>名前</td>
+                    <td>学籍番号</td>
+                    <td>提出状況</td>
+                    <td>フアィル</td>
                     {{-- <th>状況変更</th> --}}
                 </tr>
             </thead>
@@ -56,7 +56,7 @@
                         <td>  &#x2714;</td>
                         <td>
                             @if($user->pivot->file_path)
-                                <a href="{{ asset('storage/' . $user->pivot->file_path) }}" download>
+                            <a href="{{ asset('storage/' . $user->pivot->file_path) }}">
                                     ダウンロード&#x2B07; <!-- Unicode down arrow -->
                                 </a>
                             @else
