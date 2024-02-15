@@ -4,19 +4,22 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\SubjectResource\Pages;
 use App\Filament\Resources\SubjectResource\RelationManagers;
+use App\Filament\Resources\SubjectResource\RelationManagers\UsersRelationManager;
 use App\Models\Subject;
+use App\Models\User;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Factories\Relationship;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class SubjectResource extends Resource
 {
-    protected static ?string $navigationLabel = '授業';
-    protected static ?string $modelLabel = '授業';
+    protected static ?string $navigationLabel = '授業管理';
+    protected static ?string $modelLabel = '授業管理';
     public static function registerNavigation(): array
     {
         $subjects = Subject::all();
@@ -52,9 +55,9 @@ class SubjectResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('id')->required(),
-                Forms\Components\TextInput::make('name'),
-               
+                //Forms\Components\TextInput::make('id')->required(),
+                Forms\Components\TextInput::make('name')
+                ->label('授業名'),
             ]);
     }
 
@@ -82,7 +85,7 @@ class SubjectResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            UsersRelationManager::class
         ];
     }
 

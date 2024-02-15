@@ -19,6 +19,10 @@ class ViewAssignment extends ViewRecord
     protected static string $resource = AssignmentResource::class;
    // protected static string $view = 'filament.users';
 
+   public static function getNavigationLabel(): string
+   {
+       return 'タスク内容';
+   }
     public function infolist(Infolist $infolist): Infolist
 
     {
@@ -52,17 +56,6 @@ class ViewAssignment extends ViewRecord
                           ->url(fn ($record) => asset('storage/' . $record->file_path)),
                             ])
                  ->collapsed(false),
-                 Section::make('提出条件')
-                 ->description('提出した学生一覧')
-                 ->schema([
-                     ViewEntry::make('submittedUsers')
-                         ->view('filament.users', [
-                             'submittedUsers' => $this->record->submittedUsers,
-                         ]),
-                 ])
-                 ->collapsed(false),
-
-                
 
              
             ]);
