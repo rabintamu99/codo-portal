@@ -58,8 +58,7 @@ class ViewAssignment extends ViewRecord
                  ->collapsed(false),
 
              
-            ]);
+          
+        ]);
     }
-
- 
 }

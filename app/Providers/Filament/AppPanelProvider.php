@@ -22,6 +22,8 @@ use Saade\FilamentFullCalendar\FilamentFullCalendarPlugin;
 use Filament\Notifications\Livewire\DatabaseNotifications;
 use Althinect\FilamentSpatieRolesPermissions\FilamentSpatieRolesPermissionsPlugin;
 use Filament\Navigation\NavigationItem;
+use Rupadana\FilamentAnnounce\FilamentAnnouncePlugin;
+
 class AppPanelProvider extends PanelProvider
 {
     public function panel(Panel $panel): Panel
@@ -41,6 +43,12 @@ class AppPanelProvider extends PanelProvider
             ->plugin(FilamentSpatieRolesPermissionsPlugin::make())
             ->databaseNotifications()
             ->plugin(FilamentSpatieRolesPermissionsPlugin::make())
+            ->plugin(
+                FilamentAnnouncePlugin::make()
+                    ->pollingInterval('30s') // optional, by default it is set to null
+                    ->defaultColor(Color::Blue) // optional, by default it is set to "primary"
+ 
+            )
             ->navigationGroups([
                 NavigationGroup::make()
                      ->label('管理')
