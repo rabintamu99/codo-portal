@@ -65,8 +65,7 @@ class ViewAssignment extends ViewRecord
                 
 
              
-            ]);
+          
+        ]);
     }
-
- 
 }
