@@ -5,6 +5,6 @@ return [
         'group' => '',
     ],
     'can_access' => [
-        'role' => ['super_admin'],
+        'role' => ['admin'],
     ],
 ];

@@ -53,8 +53,8 @@ class UserResource extends Resource
                 ->badge()
                 ->color(fn (string $state): string => match ($state) {
                     'Admin'=> 'success',
-                    '学生' => 'warning',
-                    '先生' => 'danger',
+                    'Student' => 'warning',
+                    'Teacher' => 'danger',
                 })
                 ->searchable(),
               

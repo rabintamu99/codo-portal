@@ -7,7 +7,7 @@
                 wire:click="create"
                 color="primary"
             >
-                {{ __('filament-comments::filament-comments.comments.add') }}
+                {{ __('コメント追加') }}
             </x-filament::button>
         </div>
     @endif
@@ -61,7 +61,7 @@
             />
             
             <div class="text-sm text-gray-400 dark:text-gray-500">
-                {{ __('filament-comments::filament-comments.comments.empty') }}
+                {{ __('コメントありません') }}
             </div>
         </div>
     @endif

@@ -40,7 +40,9 @@ class AppPanelProvider extends PanelProvider
             ->colors([
                 'primary' => Color::Amber,
             ])
-            ->plugin(FilamentSpatieRolesPermissionsPlugin::make())
+            ->plugins([
+                \BezhanSalleh\FilamentShield\FilamentShieldPlugin::make()
+            ])
             ->databaseNotifications()
             ->plugin(FilamentSpatieRolesPermissionsPlugin::make())
             ->plugin(

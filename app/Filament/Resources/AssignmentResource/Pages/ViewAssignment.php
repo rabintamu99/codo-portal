@@ -13,6 +13,7 @@ use Filament\Infolists\Components\ImageEntry;
 use Illuminate\Contracts\View\View;
 use Filament\Forms\Form;
 use Filament\Infolists\Components\ViewEntry;
+use Parallax\FilamentComments\Infolists\Components\CommentsEntry;
 
 class ViewAssignment extends ViewRecord
 {
@@ -46,17 +47,25 @@ class ViewAssignment extends ViewRecord
                     ])
                     ->collapsed(false), // Set to true to initially collapse the section
 
-                Section::make('フアイル')
-                    ->description('')
-                    ->schema([
-                        ImageEntry::make('file_path')
-                          ->disk('public')
-                          ->label('ダウンロドする')
+                // Section::make('フアイル')
+                //     ->description('')
+                //     ->schema([
+                //         ImageEntry::make('file_path')
+                //           ->disk('public')
+                //           ->label('ダウンロドする')
                         
-                          ->url(fn ($record) => asset('storage/' . $record->file_path)),
-                            ])
-                 ->collapsed(false),
+                //           ->url(fn ($record) => asset('storage/' . $record->file_path))
 
+                //             ])
+                //  ->collapsed(false),
+                 Section::make('コメント')
+                 ->description('')
+                    ->schema([
+                        CommentsEntry::make('filament_comments'),
+                    ])
+              ->collapsed(false),
+
+                
              
           
         ]);
